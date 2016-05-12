@@ -262,7 +262,7 @@ public class ArticleListActivity extends ActionBarActivity implements
             holder.thumbnailView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                     changeSize((DynamicHeightNetworkImageView) view);
+                  //   changeSize((DynamicHeightNetworkImageView) view);
                     Intent intent =  new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition())));
                     boolean curve = (position % 2 == 0);

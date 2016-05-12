@@ -140,7 +140,7 @@ postponeEnterTransition();
             while (!mCursor.isAfterLast()) {
                 if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
                     final int position = mCursor.getPosition();
-                    mPager.setCurrentItem(position, false);
+                    mPager.setCurrentItem(position, true);
                     break;
                 }
                 mCursor.moveToNext();

@@ -1,7 +1,7 @@
 <com.example.xyzreader.ui.DrawInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/draw_insets_frame_layout"
-    android:layout_width="match_parent" android:background="@color/white"
+    android:layout_width="match_parent" android:background="@color/background_floating_material_dark"
     android:layout_height="match_parent">
 
     <com.example.xyzreader.ui.ObservableScrollView
@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <FrameLayout
                 android:id="@+id/photo_container"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="350dp"
                 android:background="@color/photo_placeholder">
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView  android:transitionName="imgTransition"
@@ -33,13 +33,13 @@
                     android:background="@drawable/photo_background_protection" />
 
             </FrameLayout>
-<RelativeLayout
+<LinearLayout
     android:layout_width="wrap_content"   android:layout_gravity="center_horizontal"
 android:id="@+id/detailBottomCtr"
     android:alpha="0.6"
-    android:background="#000"
-
-    android:layout_marginTop="@dimen/detail_card_top_margin"
+    android:background="#000" android:orientation="vertical"
+android:elevation="8dp"
+    android:layout_marginTop="220dp" android:layout_centerHorizontal="true"
     android:layout_height="wrap_content">
 
     <com.example.xyzreader.ui.MaxWidthLinearLayout
@@ -50,17 +50,17 @@ android:id="@+id/detailBottomCtr"
       >
 <LinearLayout
     android:layout_width="match_parent" android:orientation="horizontal"
-    android:layout_height="wrap_content"  android:paddingLeft="@dimen/detail_inner_horiz_margin"
+    android:layout_height="wrap_content"
   >
     <LinearLayout
         android:id="@+id/meta_bar"
         android:layout_width="0dp" android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:background="#333"
+
         android:paddingRight="@dimen/detail_inner_horiz_margin"
         android:paddingTop="@dimen/detail_metabar_vert_padding"
         android:paddingBottom="@dimen/detail_metabar_vert_padding"
-        android:layout_marginBottom="@dimen/detail_metabar_vert_padding"
+
 
         android:orientation="vertical"
        >
@@ -72,15 +72,17 @@ android:id="@+id/detailBottomCtr"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
             android:fontFamily="sans-serif-condensed"
+
             android:textColor="#fff"
-            android:textStyle="bold"
-            android:textSize="@dimen/detail_title_text_size"
+            android:textStyle="bold" android:paddingLeft="16dp"
+            android:textSize="@dimen/detail_title_text_size" android:text="asdafasfasf"
             android:lineSpacingMultiplier="0.9"
-            android:gravity="end" />
+            android:gravity="start" />
 
         <TextView
-            android:id="@+id/article_byline"
-            style="?android:attr/textAppearanceSmall"
+            android:id="@+id/article_byline" android:paddingLeft="16dp"
+            android:paddingBottom="16dp"
+            style="?android:attr/textAppearanceSmall" android:text="asdafasfasf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff" />
@@ -90,7 +92,7 @@ android:id="@+id/detailBottomCtr"
     <ImageButton android:id="@+id/share_fab"
         android:stateListAnimator="@anim/fab_state_list_anim"
         android:background="@drawable/oval_ripple"
-
+android:layout_gravity="center_vertical"
 
         android:layout_marginRight="@dimen/fab_margin"
 
@@ -119,9 +121,9 @@ android:id="@+id/detailBottomCtr"
 
     </com.example.xyzreader.ui.MaxWidthLinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
 
-        </FrameLayout>
+        </RelativeLayout>
     </com.example.xyzreader.ui.ObservableScrollView>
 
 </com.example.xyzreader.ui.DrawInsetsFrameLayout>

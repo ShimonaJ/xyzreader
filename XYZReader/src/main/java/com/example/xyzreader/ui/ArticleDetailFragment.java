@@ -191,7 +191,7 @@ public class ArticleDetailFragment extends Fragment implements
         if (mRootView == null) {
             return;
         }
-
+final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_insets_frame_layout);
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
@@ -280,7 +280,8 @@ public class ArticleDetailFragment extends Fragment implements
                                                     mMutedColor = palette.getDarkMutedColor
                                                             (0xFF333333);
                                                 }
-                                                detailBottomCtr.setBackgroundColor(mMutedColor);
+                                                draw_insets_frame_layout.setBackgroundColor(mMutedColor);
+                                             //   detailBottomCtr.setBackgroundColor(mMutedColor);
                                                 updateStatusBar();
                                                 if(getActivity()!=null){
                                                     getActivity().startPostponedEnterTransition();

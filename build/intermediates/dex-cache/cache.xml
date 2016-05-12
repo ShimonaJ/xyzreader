@@ -1,3 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Shimona\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-22.2.0_83c7baf3e059e25398cc17bf7f304c71abedfdf6\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.facebook.stetho\stetho-okhttp\1.2.0\6c5c9380e245c4ff5be2b2a49dcbb0200c39798e\stetho-okhttp-1.2.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="6c5c9380e245c4ff5be2b2a49dcbb0200c39798e">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\stetho-okhttp-1.2.0_ff16b0c05a864943573dfdcd4823b8015bb5c6d2\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\2.0.1\516c03b21d50a644d538de0f0369c620989cd8f0\jsr305-2.0.1.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="516c03b21d50a644d538de0f0369c620989cd8f0">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\jsr305-2.0.1_5b96abf55adb400943cd1b0893f815bbceb684ea\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.2.0\959c454243581fdf730abfd4f4745441724bcf2c\okhttp-2.2.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="959c454243581fdf730abfd4f4745441724bcf2c">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-2.2.0_389e0a6d24219d6136c08312fdcd0bdcaa92bc74\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\palette-v7\22.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="285506e1cf9d5a66878e2aab3884b3427f8734e9">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-palette-v7-22.0.0_40dcbf3c885e874353986e194f099d089fb1c1e8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.facebook.stetho\stetho\1.2.0\1d6cdb8ce8185b8b23213fad48a83987fb6d2d67\stetho-1.2.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="1d6cdb8ce8185b8b23213fad48a83987fb6d2d67">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\stetho-1.2.0_f6d8f2637eb25f30a3a14b953055bb28cd42ca16\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="7a9390f1cbbddb44bf56e369e62b34e817b36274">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_63b8a4d8e21bb50e00ff061e2de539dc37955618\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\design\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-22.2.0_bbea92403effe5ac46f526ac66088af7f55b1937\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-22.2.0_ba72508134ee6dd41b220e7422561ccd47bda08b\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.2.0_7fdd39cd4cd4aaab008d759c377bc041c700d0ec\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="b6c9c19ad17b370fd34523d17c2c038f94d54b7d">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_089afbf3e73562e931916bfdc393174111c763b0\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\commons-cli\commons-cli\1.2\2bf96b7aa8b611c177d329452af1dc933e14501c\commons-cli-1.2.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="2bf96b7aa8b611c177d329452af1dc933e14501c">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\commons-cli-1.2_db2622e73c4698e769479d874514090b753c8698\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-22.0.0_76bd12f105bdbdd0fc770f3bfa1ab290d73e3c88\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\support-v13\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="def3eff2b7b4774d96ae15b07b3fc0111edbfe24">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.0.0_4a12cb3b6ae8d197fd550053d2a78588374ecd07\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.2.0\c0b52915a48fa91b1b94a28d4a2997bac5f524df\okio-1.2.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="c0b52915a48fa91b1b94a28d4a2997bac5f524df">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.2.0_de8cfa8c131918d680db80e30a3c6eba190fec0d\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-22.0.0_2e072aa8c6183bd750d58fb20e93eda167e3a0c6\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\support-v13\22.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="7f9cca1caa023a880b00c382bcc5c90245ae4895">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-22.0.0_4b5b0ddec787aece660fc7193d8cc9df9162af70\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_f04d5463a32e23bd824d67b7f0e74dc2d5f60b38\classes.dex" />
+    </item>
+    <item
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.0_d2e5aaeaa26c2f559b928c83f02db478b9275a37\classes.dex" />
+    </item>
+
+</items>

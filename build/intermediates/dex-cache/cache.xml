@@ -107,13 +107,6 @@
         <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.2.0_de8cfa8c131918d680db80e30a3c6eba190fec0d\classes.dex" />
     </item>
     <item
-        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.0.0\jars\classes.jar"
-        jumboMode="true"
-        revision="22.0.1"
-        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
-        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-22.0.0_2e072aa8c6183bd750d58fb20e93eda167e3a0c6\classes.dex" />
-    </item>
-    <item
         jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\support-v13\22.0.0\jars\classes.jar"
         jumboMode="true"
         revision="22.0.1"
@@ -121,11 +114,11 @@
         <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-22.0.0_4b5b0ddec787aece660fc7193d8cc9df9162af70\classes.dex" />
     </item>
     <item
-        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.0.0\jars\classes.jar"
         jumboMode="true"
         revision="22.0.1"
-        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_f04d5463a32e23bd824d67b7f0e74dc2d5f60b38\classes.dex" />
+        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-22.0.0_2e072aa8c6183bd750d58fb20e93eda167e3a0c6\classes.dex" />
     </item>
     <item
         jar="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
@@ -133,6 +126,13 @@
         revision="22.0.1"
         sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
         <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.0_d2e5aaeaa26c2f559b928c83f02db478b9275a37\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Shimona\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        revision="22.0.1"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="D:\AndroidApps\xyzreader\XYZReader\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_f04d5463a32e23bd824d67b7f0e74dc2d5f60b38\classes.dex" />
     </item>
 
 </items>

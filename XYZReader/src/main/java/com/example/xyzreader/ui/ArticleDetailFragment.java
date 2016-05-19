@@ -2,6 +2,7 @@ package com.example.xyzreader.ui;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.res.ColorStateList;
@@ -18,11 +19,14 @@ import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
+import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,7 +62,9 @@ public class ArticleDetailFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
-
+    Typeface typefaceMedium;
+    Typeface typefaceBold;
+    Typeface typefaceRegular;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -109,6 +115,11 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+        Slide slide = new Slide(Gravity.END);
+        slide.addTarget(R.id.scrollview);
+        slide.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
+        slide.setDuration(500);
+        getActivity().getWindow().setEnterTransition(slide);
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
                 mRootView.findViewById(R.id.draw_insets_frame_layout);
         mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
@@ -131,8 +142,7 @@ public class ArticleDetailFragment extends Fragment implements
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
-        getActivity().getWindow().setSharedElementEnterTransition(TransitionInflater.from(getActivity())
-                .inflateTransition( R.transition.curve ));
+
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
@@ -148,6 +158,7 @@ public class ArticleDetailFragment extends Fragment implements
 
         bindViews();
         updateStatusBar();
+
         return mRootView;
     }
 
@@ -166,8 +177,8 @@ public class ArticleDetailFragment extends Fragment implements
 //
 //            // check if we should used curved motion and load an appropriate transition
 //
-//            setSharedElementEnterTransition(TransitionInflater.from(getActivity())
-//                    .inflateTransition( R.transition.curve ));
+            setSharedElementEnterTransition(TransitionInflater.from(getActivity())
+                    .inflateTransition( R.transition.curve ));
         }
         mStatusBarColorDrawable.setColor(color);
         mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
@@ -192,52 +203,35 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_insets_frame_layout);
-        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
+        final TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
+        final TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
-        TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+        final TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+        final View fabView = (View) mRootView.findViewById(R.id.share_fab);
+        bodyView.setTypeface(typefaceMedium);
+        titleView.setTypeface(typefaceRegular);
+        bylineView.setTypeface(typefaceRegular);
+      //  bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
         final ViewGroup detailBottomCtr = (ViewGroup) mRootView.findViewById(R.id.detailBottomCtr);
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            titleView.setContentDescription(titleView
+                    .getText());
             bylineView.setText(Html.fromHtml(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                             System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                             DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by <font color='#ffffff'>"
+                            + " by <i>"
                             + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                            + "</font>"));
+                            + "</i>"));
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
+            bodyView.setContentDescription(bodyView
+            .getText());
 
-//          Uri uri = Uri.parse( mCursor.getString(ArticleLoader.Query.PHOTO_URL));
-//           Glide.with(getActivity()).load(uri).asBitmap()
-//                   .listener(new RequestListener<String, Bitmap>() {
-//                       @Override
-//                       public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-//                           return false;
-//                       }
-//
-//                       @Override
-//                       public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                           if (resource != null) {
-//                               updateStatusBar();
-//
-//                               if (getActivity() != null) {
-//                                   getActivity().startPostponedEnterTransition();
-//                               }
-//                           }
-//
-//                       }
-//                   });
-//                            }
-//                            return false;
-//                        }
-//                    })
-//                    .into(mPhotoView);
 
 
 
@@ -269,6 +263,9 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
 
                                                 if (titleAndFabColors == null) {
                                                     titleAndFabColors = lightMutedSwatch;
+                                                    if(titleAndFabColors!=null) {
+
+                                                    }
                                                 }
 
                                                 if (backgroundAndContentColors != null) {
@@ -281,11 +278,19 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
                                                             (0xFF333333);
                                                 }
                                                 draw_insets_frame_layout.setBackgroundColor(mMutedColor);
+                                                if(titleView!=null) {
+                                                    if(darkMutedSwatch!=null) {
+                                                        titleView.setTextColor(darkMutedSwatch.getRgb());
+                                                    }else{
+                                                        titleView.setTextColor(mMutedColor);
+                                                    }
+                                                    fabView.setBackgroundColor(mMutedColor);
+                                                    bylineView.setTextColor(mMutedColor);
+                                                    bodyView.setTextColor(mMutedColor);
+                                                }
                                              //   detailBottomCtr.setBackgroundColor(mMutedColor);
                                                 updateStatusBar();
-                                                if(getActivity()!=null){
-                                                    getActivity().startPostponedEnterTransition();
-                                                }
+
 
                                             }
                                         });
@@ -333,6 +338,14 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         bindViews();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+ typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
+        typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
+        typefaceBold=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf");
+        super.onAttach(context);
     }
 
     public int getUpButtonFloor() {

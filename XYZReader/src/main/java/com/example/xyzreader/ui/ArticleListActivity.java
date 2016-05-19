@@ -11,10 +11,12 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -44,9 +46,12 @@ import com.example.xyzreader.data.UpdaterService;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
-public class ArticleListActivity extends ActionBarActivity implements
+public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
     float offset ;
+    Typeface typefaceMedium;
+    Typeface typefaceBold;
+    Typeface typefaceRegular;
     Interpolator interpolator;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -81,6 +86,9 @@ public class ArticleListActivity extends ActionBarActivity implements
 
     @Override
     protected void onStart() {
+        typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
+        typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
+        typefaceBold=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf");
         super.onStart();
         registerReceiver(mRefreshingReceiver,
                 new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
@@ -95,8 +103,28 @@ public class ArticleListActivity extends ActionBarActivity implements
     private boolean mIsRefreshing = false;
 
     public static final float LARGE_SCALE = 1.5f;
-    private boolean symmetric = true;
-    private boolean small = true;
+    private boolean symmetric = false;
+    private boolean small = false;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+//        outState.putInt("Pager_Current",);
+//        outState.putInt("Selected_match",selected_match_id);
+//        getSupportFragmentManager().putFragment(outState,"my_main",my_main);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        Log.v(save_tag,"will retrive");
+//        Log.v(save_tag,"fragment: "+String.valueOf(savedInstanceState.getInt("Pager_Current")));
+//        Log.v(save_tag,"selected id: "+savedInstanceState.getInt("Selected_match"));
+//        current_fragment = savedInstanceState.getInt("Pager_Current");
+//        selected_match_id = savedInstanceState.getInt("Selected_match");
+        //my_main = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState,"my_main");
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
@@ -111,7 +139,7 @@ public class ArticleListActivity extends ActionBarActivity implements
     private void updateRefreshingUI() {
        mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
     }
-    public void changeSize(DynamicHeightNetworkImageView card) {
+    public void changeSize(View card) {
         Interpolator interpolator = AnimationUtils.loadInterpolator(this, android.R
                 .interpolator.fast_out_slow_in);
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(card, View.SCALE_X, (small ? LARGE_SCALE : 1f));
@@ -124,10 +152,10 @@ public class ArticleListActivity extends ActionBarActivity implements
         scaleY.start();
 
         // toggle the state so that we switch between large/small and symmetric/asymmetric
-        small = !small;
-        if (small) {
-            symmetric = !symmetric;
-        }
+//        small = !small;
+//        if (small) {
+//            symmetric = !symmetric;
+//        }
     }
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -194,6 +222,13 @@ public class ArticleListActivity extends ActionBarActivity implements
             final int color = COLORS[position % COLORS.length];
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            holder.titleView.setContentDescription(mCursor.getString(ArticleLoader.Query.TITLE));
+            Typeface typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
+            Typeface typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
+         //   Typeface typefaceBold=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf");
+            holder.titleView.setTypeface(typefaceMedium);
+            holder.subtitleView.setTypeface(typefaceRegular);
+
             holder.subtitleView.setText(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
@@ -201,6 +236,7 @@ public class ArticleListActivity extends ActionBarActivity implements
                             DateUtils.FORMAT_ABBREV_ALL).toString()
                             + " by "
                             + mCursor.getString(ArticleLoader.Query.AUTHOR));
+            holder.subtitleView.setContentDescription(holder.subtitleView.getText());
          //   ViewHolder viewHolder = (ViewHolder) view.getTag();
 
             //String imgUrl = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
@@ -259,20 +295,22 @@ public class ArticleListActivity extends ActionBarActivity implements
 //                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
 
-            holder.thumbnailView.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                  //   changeSize((DynamicHeightNetworkImageView) view);
+                     changeSize( view);
+
                     Intent intent =  new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition())));
                     boolean curve = (position % 2 == 0);
                     intent.putExtra(ArticleDetailActivity.EXTRA_COLOR, color);
                  intent.putExtra(ArticleDetailActivity.EXTRA_CURVE, curve);
+                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(host).toBundle();
 
-                    host.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
-                            host, holder.thumbnailView, holder.thumbnailView.getTransitionName()).toBundle());
-//                    startActivity(new Intent(Intent.ACTION_VIEW,
-//                            ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition()))));
+//                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+//                            host, holder.thumbnailView, holder.thumbnailView.getTransitionName()).toBundle());
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition()))),bundle);
                 }
             });
         }

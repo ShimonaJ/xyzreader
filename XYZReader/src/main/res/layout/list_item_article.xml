@@ -18,6 +18,8 @@
 
         <!--suppress AndroidLintContentDescription -->
         <com.example.xyzreader.ui.DynamicHeightNetworkImageView
+            android:focusable="true"
+android:contentDescription="@string/thumbnail_click"
             android:id="@+id/thumbnail"
             android:layout_width="match_parent" android:transitionName="imgTransition"
             android:layout_height="match_parent" android:scaleType="fitXY"
@@ -33,6 +35,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
+        android:focusable="true"
         android:paddingRight="16dp"
         android:paddingBottom="4dp" android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
@@ -40,6 +43,7 @@
         android:maxLines="4" />
 
     <TextView
+        android:focusable="true"
         android:id="@+id/article_subtitle"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"

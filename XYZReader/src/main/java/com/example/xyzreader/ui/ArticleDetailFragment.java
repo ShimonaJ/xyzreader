@@ -83,36 +83,24 @@ public class ArticleDetailFragment extends Fragment implements
         ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(arguments);
 
-//        final int startScrollPos =  getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
-//        Animator animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", startScrollPos);
-//        animatator.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.decelerate_cubic));
-//        //animatator.setStartDelay(2000);
-//        animatator.setDuration(1000);
-//        animatator.start();
-//
-//
-//        animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", 0);
-//        animatator.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.decelerate_cubic));
-//        animatator.setStartDelay(1000);
-//        animatator.setDuration(1000);
-//        animatator.start();
         return fragment;
     }
 private void anim(){
+if(getActivity()!=null) {
+    final int startScrollPos = getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
+    Animator animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", startScrollPos);
+    animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+    animatator.setStartDelay(1000);
+    animatator.setDuration(700);
+    animatator.start();
 
-        final int startScrollPos =  getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
-        Animator animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", startScrollPos);
-        animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
-        animatator.setStartDelay(2000);
-        animatator.setDuration(1000);
-        animatator.start();
 
-
-        animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", 150);
-        animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
-        animatator.setStartDelay(3000);
-        animatator.setDuration(1000);
-        animatator.start();
+    animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", 150);
+    animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+    animatator.setStartDelay(1700);
+    animatator.setDuration(500);
+    animatator.start();
+}
 
 }
     @Override
@@ -192,52 +180,6 @@ private void anim(){
                         .getIntent(), getString(R.string.action_share)));
             }
         });
-
-
-//
-//    final int startScrollPos = getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
-//    Animator animatator = ObjectAnimator.ofInt(getView().findViewById(R.id.detailBottomCtr), "scrollY", startScrollPos);
-//    animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
-//    animatator.setStartDelay(2000);
-//    animatator.start();
-
-//
-//        Slide slide = new Slide(Gravity.END);
-//        slide.addTarget(R.id.frag_container);
-//        slide.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
-//        slide.setDuration(500);
-//        getActivity().getWindow().setEnterTransition(slide);
-//        slide.addListener(new Transition.TransitionListener() {
-//            @Override
-//            public void onTransitionStart(Transition transition) {
-//
-//            }
-//
-//            @Override
-//            public void onTransitionEnd(Transition transition) {
-//                Log.v(TAG,"**********************");
-//
-//                final int startScrollPos =getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
-//                Animator animatator = ObjectAnimator.ofInt(getView().findViewById(R.id.detailBottomCtr),"scrollY",startScrollPos);
-//                animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
-//                animatator.start();
-//            }
-//
-//            @Override
-//            public void onTransitionCancel(Transition transition) {
-//
-//            }
-//
-//            @Override
-//            public void onTransitionPause(Transition transition) {
-//
-//            }
-//
-//            @Override
-//            public void onTransitionResume(Transition transition) {
-//
-//            }
-//        });
         bindViews();
         updateStatusBar();
 
@@ -371,7 +313,7 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
                                                 }
                                              //   detailBottomCtr.setBackgroundColor(mMutedColor);
                                                 updateStatusBar();
-
+                                                anim();
 //
 //                                                Animator animatator = ObjectAnimator.ofInt(getView().findViewById(R.id.detailBottomCtr),"scrollY",500).setDuration(300);
 //                                                animatator.start();
@@ -387,7 +329,7 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
 //                    0,100
 //            );
 
-anim();
+
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");

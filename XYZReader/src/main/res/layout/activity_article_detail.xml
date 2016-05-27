@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:id="@+id/up_container"
-        android:elevation="8dp"
+        android:elevation="8dp" android:transitionName="imgTransition"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         >

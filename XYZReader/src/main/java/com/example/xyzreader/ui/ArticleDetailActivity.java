@@ -1,5 +1,7 @@
 package com.example.xyzreader.ui;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -16,11 +18,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.view.animation.AnimationUtils;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -31,6 +35,7 @@ import com.example.xyzreader.data.ItemsContract;
  */
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String TAG = ArticleDetailActivity.class.getName();
     public static final String EXTRA_COLOR = "EXTRA_COLOR";
     public static final String EXTRA_CURVE = "EXTRA_CURVE";
 
@@ -45,7 +50,7 @@ private Activity host;
     private MyPagerAdapter mPagerAdapter;
     private View mUpButtonContainer;
     private View mUpButton;
-
+private Fragment mFragment;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +62,8 @@ private Activity host;
         host = this;
         setContentView(R.layout.activity_article_detail);
 //postponeEnterTransition();
-
+       // setSharedElementEnterTransition(TransitionInflater.from(getActivity())
+         //       .inflateTransition( R.transition.curve ));
 
         View view=(View)findViewById(R.id.action_up);
 //
@@ -68,6 +74,7 @@ private Activity host;
 
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
+
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         mPager.setPageMargin((int) TypedValue
@@ -129,6 +136,29 @@ private Activity host;
     }
 
     @Override
+    public void onEnterAnimationComplete() {
+        super.onEnterAnimationComplete();
+        Log.v(TAG,"******************************");
+        if(mFragment!=null) {
+            View mScrollView =mFragment.getView().findViewById(R.id.scrollview);
+            final int startScrollPos = getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
+            Animator animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", startScrollPos);
+            animatator.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.decelerate_cubic));
+            //animatator.setStartDelay(2000);
+            animatator.setDuration(1000);
+            animatator.start();
+
+
+            animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", 0);
+            animatator.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.decelerate_cubic));
+            animatator.setStartDelay(1000);
+            animatator.setDuration(1000);
+            animatator.start();
+        }
+
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return ArticleLoader.newAllArticlesInstance(this);
     }
@@ -181,6 +211,7 @@ private Activity host;
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
             ArticleDetailFragment fragment = (ArticleDetailFragment) object;
+
             if (fragment != null) {
                 mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
                 updateUpButtonPosition();
@@ -190,7 +221,8 @@ private Activity host;
         @Override
         public Fragment getItem(int position) {
             mCursor.moveToPosition(position);
-            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
+            mFragment = ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
+            return mFragment;
         }
 
         @Override

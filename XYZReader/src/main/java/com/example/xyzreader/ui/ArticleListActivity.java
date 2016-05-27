@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -12,6 +13,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,10 +25,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
@@ -39,6 +44,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.example.xyzreader.remote.Config;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -48,10 +54,9 @@ import com.example.xyzreader.data.UpdaterService;
  */
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String TAG = ArticleListActivity.class.getName();
     float offset ;
-    Typeface typefaceMedium;
-    Typeface typefaceBold;
-    Typeface typefaceRegular;
+
     Interpolator interpolator;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -62,13 +67,14 @@ public class ArticleListActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
+        Config.initFonts(this);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         offset = getResources().getDimensionPixelSize(R.dimen.offset_y);
         interpolator =
                 AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in);
 
 
-        final View toolbarContainerView = findViewById(R.id.toolbar_container);
+
           mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -80,15 +86,15 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     }
 
+
+
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
     }
 
     @Override
     protected void onStart() {
-        typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
-        typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
-        typefaceBold=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf");
+
         super.onStart();
         registerReceiver(mRefreshingReceiver,
                 new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
@@ -223,11 +229,11 @@ public class ArticleListActivity extends AppCompatActivity implements
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             holder.titleView.setContentDescription(mCursor.getString(ArticleLoader.Query.TITLE));
-            Typeface typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
-            Typeface typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
+          //  Typeface typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
+          //  Typeface typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
          //   Typeface typefaceBold=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf");
-            holder.titleView.setTypeface(typefaceMedium);
-            holder.subtitleView.setTypeface(typefaceRegular);
+            holder.titleView.setTypeface(Config.typefaceMedium);
+            holder.subtitleView.setTypeface(Config.typefaceRegular);
 
             holder.subtitleView.setText(
                     DateUtils.getRelativeTimeSpanString(
@@ -298,19 +304,18 @@ public class ArticleListActivity extends AppCompatActivity implements
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                     changeSize( view);
+                     //changeSize( view);
 
                     Intent intent =  new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition())));
                     boolean curve = (position % 2 == 0);
                     intent.putExtra(ArticleDetailActivity.EXTRA_COLOR, color);
                  intent.putExtra(ArticleDetailActivity.EXTRA_CURVE, curve);
-                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(host).toBundle();
+                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(host, holder.thumbnailView, holder.thumbnailView.getTransitionName()).toBundle();
 
-//                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
-//                            host, holder.thumbnailView, holder.thumbnailView.getTransitionName()).toBundle());
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition()))),bundle);
+                    startActivity(intent, bundle);
+//                    startActivity(new Intent(Intent.ACTION_VIEW,
+//                            ItemsContract.Items.buildItemUri(getItemId(holder.getAdapterPosition()))),bundle);
                 }
             });
         }
@@ -321,10 +326,12 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public DynamicHeightNetworkImageView thumbnailView;
         public TextView titleView;
         public TextView subtitleView;
+        static int green;
+        static int white;
 public ViewGroup bottombar;
 
 
@@ -334,6 +341,30 @@ public ViewGroup bottombar;
             titleView = (TextView) view.findViewById(R.id.article_title);
 bottombar = (ViewGroup)view.findViewById(R.id.bottomBar);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+            if (green == 0)
+                green = itemView.getContext().getResources().getColor(R.color.cardview_dark_background);
+            if (white == 0)
+                white = itemView.getContext().getResources().getColor(R.color.background_material_light);
         }
+        @Override
+        public void onClick(View view) {
+            boolean isVeggie = ((ColorDrawable)view.getBackground()) != null && ((ColorDrawable)view.getBackground()).getColor() == green;
+
+            TransitionManager.beginDelayedTransition((ViewGroup) view);
+            int finalRadius = Math.max(view.getWidth(), view.getHeight()) / 2;
+
+            if (isVeggie) {
+           //     text1.setText(baconTitle);
+             //   text2.setText(baconText);
+                view.setBackgroundColor(white);
+            } else {
+                Animator anim = ViewAnimationUtils.createCircularReveal(view, (int) view.getWidth()/2, (int) view.getHeight()/2, 0, finalRadius);
+               // text1.setText(veggieTitle);
+                //text2.setText(veggieText);
+                view.setBackgroundColor(green);
+                anim.start();
+            }
+        }
+
     }
 }

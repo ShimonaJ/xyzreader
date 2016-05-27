@@ -1,5 +1,8 @@
 package com.example.xyzreader.ui;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
@@ -20,6 +23,7 @@ import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.transition.Slide;
+import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,6 +39,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.example.xyzreader.remote.Config;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -62,9 +67,7 @@ public class ArticleDetailFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
-    Typeface typefaceMedium;
-    Typeface typefaceBold;
-    Typeface typefaceRegular;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -79,9 +82,39 @@ public class ArticleDetailFragment extends Fragment implements
 
         ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(arguments);
+
+//        final int startScrollPos =  getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
+//        Animator animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", startScrollPos);
+//        animatator.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.decelerate_cubic));
+//        //animatator.setStartDelay(2000);
+//        animatator.setDuration(1000);
+//        animatator.start();
+//
+//
+//        animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", 0);
+//        animatator.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.decelerate_cubic));
+//        animatator.setStartDelay(1000);
+//        animatator.setDuration(1000);
+//        animatator.start();
         return fragment;
     }
+private void anim(){
 
+        final int startScrollPos =  getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
+        Animator animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", startScrollPos);
+        animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+        animatator.setStartDelay(2000);
+        animatator.setDuration(1000);
+        animatator.start();
+
+
+        animatator = ObjectAnimator.ofInt(mScrollView, "scrollY", 150);
+        animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+        animatator.setStartDelay(3000);
+        animatator.setDuration(1000);
+        animatator.start();
+
+}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,11 +148,9 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-        Slide slide = new Slide(Gravity.END);
-        slide.addTarget(R.id.scrollview);
-        slide.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
-        slide.setDuration(500);
-        getActivity().getWindow().setEnterTransition(slide);
+
+
+      //  getActivity().startPostponedEnterTransition();
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
                 mRootView.findViewById(R.id.draw_insets_frame_layout);
         mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
@@ -129,12 +160,15 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+
         mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
             @Override
             public void onScrollChanged() {
                 mScrollY = mScrollView.getScrollY();
-                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
+                if(getActivityCast()!=null) {
+                    getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
+                }
                 mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
                 updateStatusBar();
             }
@@ -149,6 +183,9 @@ public class ArticleDetailFragment extends Fragment implements
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //mScrollView.setScrollY(200);
+
+
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
                         .setText("Some sample text")
@@ -156,6 +193,51 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+
+//
+//    final int startScrollPos = getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
+//    Animator animatator = ObjectAnimator.ofInt(getView().findViewById(R.id.detailBottomCtr), "scrollY", startScrollPos);
+//    animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+//    animatator.setStartDelay(2000);
+//    animatator.start();
+
+//
+//        Slide slide = new Slide(Gravity.END);
+//        slide.addTarget(R.id.frag_container);
+//        slide.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
+//        slide.setDuration(500);
+//        getActivity().getWindow().setEnterTransition(slide);
+//        slide.addListener(new Transition.TransitionListener() {
+//            @Override
+//            public void onTransitionStart(Transition transition) {
+//
+//            }
+//
+//            @Override
+//            public void onTransitionEnd(Transition transition) {
+//                Log.v(TAG,"**********************");
+//
+//                final int startScrollPos =getResources().getDimensionPixelSize(R.dimen.init_scroll_up_distance);
+//                Animator animatator = ObjectAnimator.ofInt(getView().findViewById(R.id.detailBottomCtr),"scrollY",startScrollPos);
+//                animatator.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
+//                animatator.start();
+//            }
+//
+//            @Override
+//            public void onTransitionCancel(Transition transition) {
+//
+//            }
+//
+//            @Override
+//            public void onTransitionPause(Transition transition) {
+//
+//            }
+//
+//            @Override
+//            public void onTransitionResume(Transition transition) {
+//
+//            }
+//        });
         bindViews();
         updateStatusBar();
 
@@ -177,8 +259,7 @@ public class ArticleDetailFragment extends Fragment implements
 //
 //            // check if we should used curved motion and load an appropriate transition
 //
-            setSharedElementEnterTransition(TransitionInflater.from(getActivity())
-                    .inflateTransition( R.transition.curve ));
+
         }
         mStatusBarColorDrawable.setColor(color);
         mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
@@ -208,9 +289,9 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
         bylineView.setMovementMethod(new LinkMovementMethod());
         final TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
         final View fabView = (View) mRootView.findViewById(R.id.share_fab);
-        bodyView.setTypeface(typefaceMedium);
-        titleView.setTypeface(typefaceRegular);
-        bylineView.setTypeface(typefaceRegular);
+        bodyView.setTypeface(Config.typefaceMedium);
+        titleView.setTypeface(Config.typefaceRegular);
+        bylineView.setTypeface(Config.typefaceRegular);
       //  bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
         final ViewGroup detailBottomCtr = (ViewGroup) mRootView.findViewById(R.id.detailBottomCtr);
         if (mCursor != null) {
@@ -291,7 +372,9 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
                                              //   detailBottomCtr.setBackgroundColor(mMutedColor);
                                                 updateStatusBar();
 
-
+//
+//                                                Animator animatator = ObjectAnimator.ofInt(getView().findViewById(R.id.detailBottomCtr),"scrollY",500).setDuration(300);
+//                                                animatator.start();
                                             }
                                         });
                             }
@@ -300,8 +383,11 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
                     })
                     .into(mPhotoView);
 
+//            mScrollView.scrollBy(
+//                    0,100
+//            );
 
-
+anim();
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
@@ -342,9 +428,7 @@ final View draw_insets_frame_layout = (View) mRootView.findViewById(R.id.draw_in
 
     @Override
     public void onAttach(Context context) {
- typefaceRegular=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf");
-        typefaceMedium=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf");
-        typefaceBold=  Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf");
+
         super.onAttach(context);
     }
 

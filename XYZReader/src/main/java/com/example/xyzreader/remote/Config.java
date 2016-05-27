@@ -1,11 +1,17 @@
 package com.example.xyzreader.remote;
 
+import android.content.Context;
+import android.graphics.Typeface;
+
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URL;
 
 public class Config {
     public static final URL BASE_URL;
-
+public static Typeface typefaceMedium;
+    public static     Typeface typefaceBold;
+    public static Typeface typefaceRegular;
     static {
         URL url = null;
         try {
@@ -16,4 +22,10 @@ public class Config {
 
         BASE_URL = url;
     }
+    public static void initFonts(Context c){
+        typefaceRegular=  Typeface.createFromAsset(c.getResources().getAssets(), "Roboto-Regular.ttf");
+        typefaceMedium=  Typeface.createFromAsset(c.getResources().getAssets(), "Roboto-Medium.ttf");
+        typefaceBold=  Typeface.createFromAsset(c.getResources().getAssets(), "Roboto-Bold.ttf");
+    }
+
 }
